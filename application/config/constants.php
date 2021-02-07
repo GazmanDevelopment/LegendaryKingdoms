@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-define('URL', "http://webserver.local/legendsc3/index.php/");
+define('URL', "http://legends.horscrust.com/index.php/");
 
 /*
 |--------------------------------------------------------------------------

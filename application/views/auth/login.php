@@ -293,7 +293,7 @@
 		                <?php echo form_input($password);?>
 		            </div>
 		            <div>
-		                <div class="g-recaptcha" data-sitekey="6LfcUsMZAAAAANErvUWT3Q6rJBfa2q9n6dwBP2pn"></div>
+		                <div class="g-recaptcha" data-sitekey="<?php echo HORSCRUST_SITE; ?>"></div>
 						<p><?php echo form_submit('submit', lang('login_submit_btn'));?></p>
 						
 						<?php echo form_close();?>

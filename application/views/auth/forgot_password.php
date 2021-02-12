@@ -292,8 +292,7 @@
 						<?php echo form_input($identity);?>
 					</p>
 					<div>
-		                <div class="g-recaptcha" data-sitekey="6LfcUsMZAAAAANErvUWT3Q6rJBfa2q9n6dwBP2pn"></div>						
-						
+		                <div class="g-recaptcha" data-sitekey="<?php echo HORSCRUST_SITE; ?>">
 		                <p><?php echo form_submit('submit', lang('forgot_password_submit_btn'));?></p>
 						<a href="login">Back to login</a>
 		            </div>   				

@@ -73,6 +73,7 @@ class Auth extends CI_Controller
 		// validate form input
 		$this->form_validation->set_rules('identity', str_replace(':', '', $this->lang->line('login_identity_label')), 'required');
 		$this->form_validation->set_rules('password', str_replace(':', '', $this->lang->line('login_password_label')), 'required');
+		$this->form_validation->set_rules('g-recaptcha-response', 'Google RreCAPTCHA', 'required');
 
 		if ($this->form_validation->run() === TRUE)
 		{
@@ -80,6 +81,28 @@ class Auth extends CI_Controller
 			// check for "remember me"
 			$remember = (bool)$this->input->post('remember');
 
+			/**************************************************
+			* START Google reCAPTCHA verification. 
+			**************************************************/
+			// Load the relevant private key
+			$secret_key = HORSCRUST_PVTKEY;
+
+			// Verify the reCAPTCHA response 
+            $verify_response = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret_key.'&response='.$_POST['g-recaptcha-response']);  
+
+            // Decode json data 
+            $response_data = json_decode($verify_response); 
+
+            // If the verification failed, set a message and snend user back to login page
+            if( ! $response_data->success) {
+            	$this->session->set_flashdata('message', 'reCAPTCHA verification failed.  Please try again.');
+            	redirect('auth/login', 'refresh'); // use redirects instead of loading views for compatibility with MY_Controller libraries
+            	exit();
+            }
+            
+            /**************************************************
+			* END Google reCAPTCHA verification. 
+			**************************************************/
 			if ($this->ion_auth->login($this->input->post('identity'), $this->input->post('password'), $remember))
 			{
 				//if the login is successful

@@ -1,7 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-define('URL', "https://legends.horscrust.com/index.php/");
+define('URL', "http://legends.horscrust.com/index.php");
+
+define('HORSCRUST_PVTKEY', 'reCAPTCHA Private Key');
+
+define('HORSCRUST_SITE', 'reCAPTCHA Site Key');
 
 /*
 |--------------------------------------------------------------------------

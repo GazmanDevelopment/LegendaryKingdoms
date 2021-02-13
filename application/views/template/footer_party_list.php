@@ -889,5 +889,241 @@
 				});
 			});
 		}
+
+		function add_ship()
+		{
+			event.preventDefault();
+		
+			// Check the document type has been selectedIndex
+			var e = document.getElementById("new_ship_name");
+			var f = document.getElementById("new_ship_location");
+			var g = document.getElementById("new_ship_fight");
+			var h = document.getElementById("new_ship_health");
+
+			var new_ship_name = e.value;
+			var new_ship_location = f.value;
+			var new_ship_fight = g.value;
+			var new_ship_health = h.value;
+
+			if (new_ship_name == false) {
+				swal("No Ship Name Entered", "You must enter a ship name before saving.", "error");
+				return;
+			}
+
+			if (new_ship_location == false) {
+				swal("No Ship Location Entered", "You must enter the location where the ship is docked before saving.", "error");
+				return;
+			}
+
+			if (new_ship_fight == false) {
+				swal("No Fight Value Entered", "You must enter the fight value before saving.", "error");
+				return;
+			}
+
+			if (new_ship_health == false) {
+				swal("No Health Value Entered", "You must enter the health value before saving.", "error");
+				return;
+			}
+
+			// Get form
+			var form = $('#add_ship_form')[0];
+
+			// Create an FormData object 
+			var data = new FormData(form);
+			
+			// disabled the submit button
+			$("#btnSubmit").prop("disabled", true);
+
+			$.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',
+				url: "<?php echo URL; ?>fleet/add_ship",
+				data: data,
+				processData: false,
+				contentType: false,
+				cache: false,
+				timeout: 600000,
+				success: function (data) {
+					if (data.length > 0) {
+						swal("Error saving", "There was an error saving the ship\nPlease try again.", "error");
+						
+						// Re-enable the upload button
+						$("#btnSubmit").prop("disabled", false);
+					} else {
+						// Re-enable the upload button
+						$("#btnSubmit").prop("disabled", false);
+						
+						// Reload the current page
+						location.reload();
+					}	
+				},
+				error: function (e) {
+					swal("Error saving", "There was an error saving the ship.  The error was:\n" + e.responseText + "\nPlease try again.", "error");
+					$("#btnSubmit").prop("disabled", false);
+				}
+			});
+		}
+
+		function save_ship(ship_id = 0)
+		{
+			event.preventDefault();
+		
+			// Get form
+			var form = $('#ship_form_' + ship_id)[0];
+
+			// Create an FormData object 
+			var data = new FormData(form);
+			
+			// disabled the submit button
+			$("#btnSubmit").prop("disabled", true);
+
+			$.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',
+				url: "<?php echo URL; ?>fleet/update_ship",
+				data: data,
+				processData: false,
+				contentType: false,
+				cache: false,
+				timeout: 600000,
+				success: function (data) {
+					if (data.length > 0) {
+						swal("Error saving", "There was an error saving the changes\nPlease try again.", "error");
+						
+						// Re-enable the upload button
+						$("#btnSubmit").prop("disabled", false);
+					} else {
+						// Re-enable the upload button
+						$("#btnSubmit").prop("disabled", false);
+						
+
+						swal("Changes Saved", "Your changes have been saved", "success");
+					}	
+				},
+				error: function (e) {
+					swal("Error saving", "There was an error saving the changes.  The error was:\n" + e.responseText + "\nPlease try again.", "error");
+					$("#btnSubmit").prop("disabled", false);
+				}
+			});
+		}
+
+		function delete_ship(ship_id = 0)
+		{
+			var $modal = $('#delete_ship');
+
+			$modal.modal({
+				keyboard: true,
+				show: true
+			});
+			
+			$modal.on('click', '#confirm_ship_delete', function(e) {
+				$modal.modal('hide');
+				$modal.on('hidden.bs.modal', function() {
+					// Get form
+					var form = $('#ship_form_' + ship_id)[0];
+
+					// Create an FormData object 
+					var data = new FormData(form);
+					
+					// disabled the submit button
+					$("#btnSubmit").prop("disabled", true);
+
+					$.ajax({
+						type: "POST",
+						enctype: 'multipart/form-data',
+						url: "<?php echo URL; ?>fleet/delete_ship",
+						data: data,
+						processData: false,
+						contentType: false,
+						cache: false,
+						timeout: 600000,
+						success: function (data) {
+							if (data.length > 0) {
+								swal("Error saving", "There was an error saving the changes\nPlease try again.", "error");
+								
+								// Re-enable the upload button
+								$("#btnSubmit").prop("disabled", false);
+							} else {
+								// Re-enable the upload button
+								$("#btnSubmit").prop("disabled", false);
+								
+								location.reload();
+							}	
+						},
+						error: function (e) {
+							swal("Error saving", "There was an error saving the changes.  The error was:\n" + e.responseText + "\nPlease try again.", "error");
+							$("#btnSubmit").prop("disabled", false);
+						}
+					});
+				});
+			});
+		}
+
+		function init_battlefield(party_id = 0)
+		{
+			var $modal = $('#init_battlefield');
+
+			$modal.modal({
+				keyboard: true,
+				show: true
+			});
+
+			$modal.on('click', '#confirm_battlefield_init', function(e) {
+				$modal.modal('hide');
+				$modal.on('hidden.bs.modal', function() {
+					$.ajax({
+						type: "POST",
+						enctype: 'multipart/form-data',
+						url: "<?php echo URL; ?>battlefield/initialise_battlefield/" + party_id,
+						processData: false,
+						contentType: false,
+						cache: false,
+						timeout: 600000,
+						success: function (data) {
+							if (data.length > 0) {
+								swal("Error preparing", "There was an error preparing the battlefield\nPlease try again.", "error");
+							} else {
+								location.reload();
+							}	
+						},
+						error: function (e) {
+							swal("Error preparing", "There was an error preparing the battlefield.  The error was:\n" + e.responseText + "\nPlease try again.", "error");
+						}
+					});
+				});
+			});
+		}
+
+		function update_battlefield(type = "")
+		{
+			event.preventDefault();
+		
+			// Get form
+			var form = $('#battlefield_form_' + type)[0];
+
+			// Create an FormData object 
+			var data = new FormData(form);
+
+			$.ajax({
+				type: "POST",
+				enctype: 'multipart/form-data',
+				url: "<?php echo URL; ?>battlefield/update_battlefield",
+				data: data,
+				processData: false,
+				contentType: false,
+				cache: false,
+				timeout: 600000,
+				success: function (data) {
+					if (data.length > 0) {
+						swal("Error saving", "There was an error saving the changes\nPlease try again.", "error");
+					} else {					
+						swal("Changes Saved", "Your changes have been saved", "success");
+					}	
+				},
+				error: function (e) {
+					swal("Error saving", "There was an error saving the changes.  The error was:\n" + e.responseText + "\nPlease try again.", "error");
+				}
+			});
+		}
 	</script>
 </html>

@@ -7,6 +7,9 @@ define('HORSCRUST_PVTKEY', 'reCAPTCHA Private Key');
 
 define('HORSCRUST_SITE', 'reCAPTCHA Site Key');
 
+define('BATTLEFIELD_PARTY', 'party');
+define('BATTLEFIELD_ENEMY', 'enemy');
+
 /*
 |--------------------------------------------------------------------------
 | Display Debug backtrace

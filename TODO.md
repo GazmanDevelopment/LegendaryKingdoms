@@ -3,6 +3,8 @@ Below are some things I still need to work on if I get the time.  For the moment
 
 - ~~Create SQL config and initialisation script for items other than ion_auth~~
 - ~~Finalise reCaptcha checking~~
+- Add Fleet support
+- Add Battlefield Support
 - Standardise naming conventions
 - Standardise function calls
 - Flesh out the ion_auth code to allow for registrations, activations, password resets etc

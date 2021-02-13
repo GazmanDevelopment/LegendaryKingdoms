@@ -12,6 +12,8 @@ class Party extends CI_Controller {
         $this->load->model('equipment_model');
         $this->load->model('character_model');
         $this->load->model('army_model');
+        $this->load->model('fleet_model');
+        $this->load->model('battlefield_model');
         
         // Load stuff
 		$this->load->library(['session', 'upload', 'ion_auth', 'pagination']);
@@ -48,6 +50,9 @@ class Party extends CI_Controller {
 		$party_chars = $this->character_model->get_party_characters($user_id, intval($party_id));
 		$party_equipment = $this->equipment_model->get_equipment_for_party(intval($party_id));
 		$party_armies = $this->army_model->get_party_armies($party_id);
+		$party_fleet = $this->fleet_model->get_party_fleet($party_id);
+		$enemy_battlefield = $this->battlefield_model->get_battlefield_status($party_id, BATTLEFIELD_ENEMY);
+		$party_battlefield = $this->battlefield_model->get_battlefield_status($party_id, BATTLEFIELD_PARTY);
 
 		// Load up character equipment and build a new character array
 		$party_characters = array();
@@ -67,6 +72,19 @@ class Party extends CI_Controller {
     	$data['party_characters'] = $party_characters;
     	$data['party_equipment'] = $party_equipment;
     	$data['armies'] = $party_armies;
+    	$data['fleet'] = $party_fleet;
+    	if ($enemy_battlefield) {
+    		$data['bf_enemy'] = $enemy_battlefield[0];
+    	} else {
+    		$data['bf_enemy'] = null;
+    	}
+
+    	if ($party_battlefield) {
+    		$data['bf_party'] = $party_battlefield[0];
+    	} else {
+    		$data['bf_party'] = null;
+    	}
+    	
 		
 		$this->load->view('template/header', $header_info);
     	$this->load->view('template/nav_bar', $header_info);

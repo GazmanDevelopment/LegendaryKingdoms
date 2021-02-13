@@ -5,6 +5,7 @@ Below are some things I still need to work on if I get the time.  For the moment
 - ~~Finalise reCaptcha checking~~
 - Add Fleet support
 - Add Battlefield Support
+- Check security - users can only view / edit items in their assigned parties
 - Standardise naming conventions
 - Standardise function calls
 - Flesh out the ion_auth code to allow for registrations, activations, password resets etc

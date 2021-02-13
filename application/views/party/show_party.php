@@ -8,6 +8,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#party_log" role="tab" aria-controls="nav-contact" aria-selected="false">Log</a>
 			<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#party_vault" role="tab" aria-controls="nav-about" aria-selected="false">Vault</a>
 			<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#armies" role="tab" aria-controls="nav-about" aria-selected="false">Armies</a>
+			<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#fleets" role="tab" aria-controls="nav-about" aria-selected="false">Fleets</a>
+			<a class="nav-item nav-link" id="nav-about-tab" data-toggle="tab" href="#battlefield" role="tab" aria-controls="nav-about" aria-selected="false">Battlefield</a>
 		</div>
 	</nav>
 	
@@ -297,7 +299,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			</div>
 		</div>
 		<div class="tab-pane fade" id="armies" role="tabpanel" aria-labelledby="nav-about-tab">
-			<legend>Party Armies / Navies</legend>
+			<legend>Party Armies</legend>
 			<a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add_army">Add army</a><br/>
 			<?php if (empty($armies)) { ?>
 			<div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -374,6 +376,256 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						    <hr />
 						  	<legend>Unit Notes</legend>
 				    		<textarea id="army_notes" name="army_notes"><?php echo ($army['notes']); ?></textarea>
+						</div>
+					</div>
+				</form>
+				<?php 
+					}
+				?>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="fleets" role="tabpanel" aria-labelledby="nav-about-tab">
+			<legend>Party Fleets</legend>
+			<a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add_ship">Add ship to fleet</a><br/>
+			<?php if (empty($fleet)) { ?>
+			<div class="alert alert-warning alert-dismissible fade show" role="alert">
+			  You don't appear to have any ships.  Click the "Add ship to fleet" button to get started...
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<?php } ?>
+			<div class="card-group">
+				<?php
+					foreach($fleet as $ship) {
+				?>
+				<form name="ship_form_<?php echo($ship['id']); ?>" id="ship_form_<?php echo($ship['id']); ?>" method="post" action="<?php echo URL; ?>fleet/update_ship">
+					<input type="hidden" id="ship_id" name="ship_id" value="<?php echo($ship['id']); ?>" />
+					<div class="card border-secondary"><!-- style="width: 35rem;"-->
+						<div class="card-header">
+						  	<h4 class="card-title"><?php echo($ship['ship_name']); ?></h4>
+						  	<a href="#" title="Save changes to ship..." onClick="save_ship(<?php echo($ship['id']); ?>)">
+						    	<i class="material-icons" style="padding-right: 4px;">save</i>
+						    </a>
+						    <a href="#" title="Remove ship from party..." onClick="delete_ship(<?php echo($ship['id']); ?>)">
+						    	<i class="material-icons" style="padding-right: 4px;">cancel</i>
+						    </a>
+						</div>
+						<div class="card-body">
+							<legend>Stats</legend>
+						    <strong>
+						    	<div class="row">
+						    		<div class="col-md-6">
+						    			Stat
+						    		</div>
+						    		<div class="col-md-6">
+						    			Current Value
+						    		</div>
+						    	</div>
+						    </strong>
+						    <div class="row">
+					    		<div class="col-md-6">
+					    			Fight <br /> 					    			
+					    		</div>
+					    		<div class="col-md-6">
+					    			<input name="fight_current" id="fight_current" type="number" value="<?php echo ($ship['fight_current']); ?>" min="0" max="99" maxlength = "2" size="1" />
+					    		</div>
+						    </div>
+						    <div class="row">
+					    		<div class="col-md-6">
+					    			Health <br /> 					    			
+					    		</div>
+					    		<div class="col-md-6">
+					    			<input name="health_current" id="health_current" type="number" value="<?php echo ($ship['health_current']); ?>" min="0" max="99" maxlength = "2" size="1" />
+					    		</div>
+						    </div>
+						    <div class="row">
+					    		<div class="col-md-6">
+					    			Location <br /> 					    			
+					    		</div>
+					    		<div class="col-md-6">
+					    			<input name="location" id="location" type="number" value="<?php echo ($ship['location']); ?>" min="0" max="99" maxlength = "2" size="1" />
+					    		</div>
+						    </div>
+						    <hr />
+						    <legend>Cargo</legend>
+						    <strong>
+						    <div class="row">
+						    	<div class="col-md-8">
+						    		Cargo
+						    	</div>
+						    	<div class="col-md-4">
+						    		Cargo Units
+						    	</div>
+						    </div>
+							</strong>
+						    <div class="row">
+						    	<div class="col-md-8">
+						    		<input name="cargo" id="cargo" type="text" value="<?php echo $ship['cargo'];?>" />
+						    	</div>
+						    	<div class="col-md-4">
+						    		<input name="cargo_units" id="cargo_units" type="number" value="<?php echo ($ship['cargo_units']); ?>" min="0" max="99" maxlength = "2" size="1" />
+						    	</div>
+						    </div>
+						    <hr />
+						  	<legend>Ships Log</legend>
+				    		<textarea id="ship_notes" name="ship_notes"><?php echo ($ship['notes']); ?></textarea>
+						</div>
+					</div>
+				</form>
+				<?php 
+					}
+				?>
+			</div>
+		</div>
+		<div class="tab-pane fade" id="battlefield" role="tabpanel" aria-labelledby="nav-about-tab">
+			<legend>Battlefield</legend>
+			<a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#init_battlefield" onClick="init_battlefield(<?php echo $party_info[0]['id'];?>)">Prepare battlefield...</a><br/>
+			<?php if (empty($bf_enemy)) { ?>
+			<div class="alert alert-warning alert-dismissible fade show" role="alert">
+			  Click the "Prepare battlefield" button to get started...
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<?php } ?>
+			<div class="card-group">
+				<?php
+					if ($bf_party) {
+				?>
+				<form name="battlefield_form_party" id="battlefield_form_party" method="post" action="<?php echo URL; ?>battlefield/update_battlefield">
+					<input type="hidden" id="bf_party_id" name="bf_party_id" value="<?php echo $party_info[0]['id'];?>" />
+					<input type="hidden" id="bf_type" name="bf_type" value="<?php echo BATTLEFIELD_PARTY; ?>" />
+					<div class="card border-secondary"><!-- style="width: 35rem;"-->
+						<div class="card-header">
+						  	<h4 class="card-title">Party Forces</h4>
+						  	<a href="#" title="Save changes to ship..." onClick="update_battlefield('<?php echo BATTLEFIELD_PARTY; ?>')">
+						    	<i class="material-icons" style="padding-right: 4px;">save</i>
+						    </a>
+						</div>
+						<div class="card-body">
+							<legend>Support</legend>
+						    <strong>
+						    	<div class="row">
+						    		<div class="col-md-4">
+						    			Left
+						    		</div>
+						    		<div class="col-md-4">
+						    			Centre
+						    		</div>
+						    		<div class="col-md-4">
+						    			Right
+						    		</div>
+						    	</div>
+						    </strong>
+						    <div class="row">
+					    		<div class="col-md-4">
+					    			<input id="lf_support" name="lf_support" type="number" value="<?php echo $bf_party['lf_support']; ?>" min="0" max="99" maxlength="2" size="1" />    			
+					    		</div>
+					    		<div class="col-md-4">
+					    			<input id="c_support" name="c_support" type="number" value="<?php echo $bf_party['c_support']; ?>" min="0" max="99" maxlength="2" size="1" />
+					    		</div>
+					    		<div class="col-md-4">
+					    			<input id="rf_support" name="rf_support" type="number" value="<?php echo $bf_party['rf_support']; ?>" min="0" max="99" maxlength="2" size="1" />
+					    		</div>
+						    </div>
+						    <hr />
+						    <legend>Front</legend>
+						    <strong>
+						    	<div class="row">
+						    		<div class="col-md-4">
+						    			Left
+						    		</div>
+						    		<div class="col-md-4">
+						    			Centre
+						    		</div>
+						    		<div class="col-md-4">
+						    			Right
+						    		</div>
+						    	</div>
+						    </strong>
+						    <div class="row">
+					    		<div class="col-md-4">
+					    			<input id="lf_front" name="lf_front" type="number" value="<?php echo $bf_party['lf_front']; ?>" min="0" max="99" maxlength="2" size="1" />    			
+					    		</div>
+					    		<div class="col-md-4">
+					    			<input id="c_front" name="c_front" type="number" value="<?php echo $bf_party['c_front']; ?>" min="0" max="99" maxlength="2" size="1" />
+					    		</div>
+					    		<div class="col-md-4">
+					    			<input id="rf_front" name="rf_front" type="number" value="<?php echo $bf_party['rf_front']; ?>" min="0" max="99" maxlength="2" size="1" />
+					    		</div>
+						    </div>
+						</div>
+					</div>
+				</form>
+				<?php 
+					}
+
+					// Enemy Battlefield Start
+					if ($bf_enemy) {
+				?>
+				<form name="battlefield_form_enemy" id="battlefield_form_enemy" method="post" action="<?php echo URL; ?>battlefield/update_battlefield">
+					<input type="hidden" id="bf_party_id" name="bf_party_id" value="<?php echo $party_info[0]['id'];?>" />
+					<input type="hidden" id="bf_type" name="bf_type" value="<?php echo BATTLEFIELD_ENEMY; ?>" />
+					<div class="card border-secondary"><!-- style="width: 35rem;"-->
+						<div class="card-header">
+						  	<h4 class="card-title">Enemy Forces</h4>
+						  	<a href="#" title="Save changes to ship..." onClick="update_battlefield('<?php echo BATTLEFIELD_ENEMY; ?>')">
+						    	<i class="material-icons" style="padding-right: 4px;">save</i>
+						    </a>
+						</div>
+						<div class="card-body">
+							<legend>Support</legend>
+						    <strong>
+						    	<div class="row">
+						    		<div class="col-md-4">
+						    			Left
+						    		</div>
+						    		<div class="col-md-4">
+						    			Centre
+						    		</div>
+						    		<div class="col-md-4">
+						    			Right
+						    		</div>
+						    	</div>
+						    </strong>
+						    <div class="row">
+					    		<div class="col-md-4">
+					    			<input id="lf_support" name="lf_support" type="number" value="<?php echo $bf_enemy['lf_support']; ?>" min="0" max="99" maxlength="2" size="1" />    			
+					    		</div>
+					    		<div class="col-md-4">
+					    			<input id="c_support" name="c_support" type="number" value="<?php echo $bf_enemy['c_support']; ?>" min="0" max="99" maxlength="2" size="1" />
+					    		</div>
+					    		<div class="col-md-4">
+					    			<input id="rf_support" name="rf_support" type="number" value="<?php echo $bf_enemy['rf_support']; ?>" min="0" max="99" maxlength="2" size="1" />
+					    		</div>
+						    </div>
+						    <hr />
+						    <legend>Front</legend>
+						    <strong>
+						    	<div class="row">
+						    		<div class="col-md-4">
+						    			Left
+						    		</div>
+						    		<div class="col-md-4">
+						    			Centre
+						    		</div>
+						    		<div class="col-md-4">
+						    			Right
+						    		</div>
+						    	</div>
+						    </strong>
+						    <div class="row">
+					    		<div class="col-md-4">
+					    			<input id="lf_front" name="lf_front" type="number" value="<?php echo $bf_enemy['lf_front']; ?>" min="0" max="99" maxlength="2" size="1" />    			
+					    		</div>
+					    		<div class="col-md-4">
+					    			<input id="c_front" name="c_front" type="number" value="<?php echo $bf_enemy['c_front']; ?>" min="0" max="99" maxlength="2" size="1" />
+					    		</div>
+					    		<div class="col-md-4">
+					    			<input id="rf_front" name="rf_front" type="number" value="<?php echo $bf_enemy['rf_front']; ?>" min="0" max="99" maxlength="2" size="1" />
+					    		</div>
+						    </div>
 						</div>
 					</div>
 				</form>
@@ -742,7 +994,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 <!-- Add equipment -->
-<div class="modal fade" id="add_item" tabindex="-1" role="dialog" aria-labelledby="add_log" aria-hidden="true">
+<div class="modal fade" id="add_item" tabindex="-1" role="dialog" aria-labelledby="add_item" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -797,7 +1049,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 <!-- Return equipment to vault -->
-<div class="modal fade" id="return_equipment" tabindex="-1" role="dialog" aria-labelledby="delete_character" aria-hidden="true">
+<div class="modal fade" id="return_equipment" tabindex="-1" role="dialog" aria-labelledby="return_equipment" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -825,7 +1077,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 <!-- Drop Equipment -->
-<div class="modal fade" id="drop_equipment" tabindex="-1" role="dialog" aria-labelledby="delete_character" aria-hidden="true">
+<div class="modal fade" id="drop_equipment" tabindex="-1" role="dialog" aria-labelledby="drop_equipment" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -854,7 +1106,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 <!-- Assign equipment -->
-<div class="modal fade" id="assign_item" tabindex="-1" role="dialog" aria-labelledby="add_log" aria-hidden="true">
+<div class="modal fade" id="assign_item" tabindex="-1" role="dialog" aria-labelledby="assign_item" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -899,11 +1151,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 <!-- Add army -->
-<div class="modal fade" id="add_army" tabindex="-1" role="dialog" aria-labelledby="add_character" aria-hidden="true">
+<div class="modal fade" id="add_army" tabindex="-1" role="dialog" aria-labelledby="add_army" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Add New Army / Navy</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Add New Army Unit</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -989,11 +1241,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </div>
 
 <!-- Delete army -->
-<div class="modal fade" id="delete_army" tabindex="-1" role="dialog" aria-labelledby="delete_character" aria-hidden="true">
+<div class="modal fade" id="delete_army" tabindex="-1" role="dialog" aria-labelledby="delete_army" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Confirm Army / Navy Unit Delete</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Confirm Army Unit Delete</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -1005,6 +1257,154 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>					
 				<button id="confirm_army_delete" type="submit" class="btn btn-danger" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="padding-right: 7px"></span>
+                    Confirm
+                </button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Add ship -->
+<div class="modal fade" id="add_ship" tabindex="-1" role="dialog" aria-labelledby="add_ship" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Add New Navy Ship</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form name="add_ship_form" id="add_ship_form" method="post" action="<?php echo URL; ?>fleet/add_ship">
+					<input type="hidden" id="new_ship_party_id" name="new_ship_party_id" value="<?php echo $party_info[0]['id'];?>" />
+						<div class="row">
+							<div class="col-md-4">
+								<label for="new_ship_name">
+									Ship Name:
+								</label>
+							</div>
+							<div class="col-md-8">
+								<input type="text" name="new_ship_name" id="new_ship_name" required />
+							</div>
+						</div><br />	
+						<strong>			
+				    	<div class="row">
+				    		<div class="col-md-4">
+				    			Stat
+							</div>
+				    		<div class="col-md-3">
+				    			Current
+				    		</div>
+				    	</div>
+				    </strong>
+			    	<div class="row">
+			    		<div class="col-md-4">
+			    			Fight <br /> 					    			
+			    		</div>
+			    		<div class="col-md-3">
+			    			<input name="new_ship_fight" id="new_ship_fight" type="number" min="0" max="99" maxlength = "2" size="1" value="0" required/>
+			    		</div>
+			    	</div>
+			    	<div class="row">
+			    		<div class="col-md-4">
+			    			Health <br /> 
+			    		</div>
+			    		<div class="col-md-3">
+			    			<input name="new_ship_health" id="new_ship_health" type="number" min="0" max="99" maxlength = "2" size="1" value="0" required />
+			    		</div>
+			    	</div>
+			    	<div class="row">
+			    		<div class="col-md-4">
+			    			Location <br /> 
+			    		</div>
+			    		<div class="col-md-3">
+			    			<input name="new_ship_location" id="new_ship_location" type="number" min="0" max="99" maxlength = "2" size="1" required />
+			    		</div>
+			    	</div><br />
+			    	<strong>
+			    	<div class="row">
+			    		<div class="col-md-4">
+			    			Cargo
+						</div>
+			    		<div class="col-md-3">
+			    			Cargo Units
+			    		</div>
+			    	</div>
+			    	</strong>
+			    	<div class="row">
+			    		<div class="col-md-4">
+			    			<input name="new_ship_cargo" id="new_ship_cargo" type="text" size="15" />
+			    		</div>
+			    		<div class="col-md-3">
+			    			<input name="new_ship_cargo_units" id="new_ship_cargo_units" type="number" min="0" max="999" maxlength="3" size="1" />			    			
+			    		</div>
+			    	</div><br />
+			    	<div class="row">
+			    		<div class="col-md-4">
+			    			<strong>Ships Log</strong>
+			    		</div>
+					</div>
+					<div class="row">
+			    		<div class="col-md-12">
+			    			<textarea id="new_ship_notes" name="new_ship_notes"></textarea>
+			    		</div>
+			    	</div>
+			    </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>					
+				<button id="confirm_char_delete" type="submit" class="btn btn-success" data-dismiss="modal" onclick="add_ship()">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="padding-right: 7px"></span>
+                    Confirm
+                </button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Delete ship -->
+<div class="modal fade" id="delete_ship" tabindex="-1" role="dialog" aria-labelledby="delete_ship" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Confirm Ship Delete</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				There is no way to recover ships once they are deleted. <br />
+				<strong>If you click "Confirm", your ship will be permanently deleted.</strong>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>					
+				<button id="confirm_ship_delete" type="submit" class="btn btn-danger" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="padding-right: 7px"></span>
+                    Confirm
+                </button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Delete ship -->
+<div class="modal fade" id="init_battlefield" tabindex="-1" role="dialog" aria-labelledby="init_battlefield" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Confirm Battlefield Preparation</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				This will overwrite any current battlefield status.  This status cannot be retrieved. <br />
+				<strong>If you click "Confirm", your battelfield status will be reset.</strong>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>					
+				<button id="confirm_battlefield_init" type="submit" class="btn btn-danger" data-dismiss="modal">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="padding-right: 7px"></span>
                     Confirm
                 </button>

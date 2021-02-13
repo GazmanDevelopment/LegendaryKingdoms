@@ -81,3 +81,39 @@ CREATE TABLE `spells` (
  `used` int(11) NOT NULL DEFAULT 0,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+CREATE TABLE `battlefield_enemy` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `lf_support` int(11) NOT NULL DEFAULT 0,
+ `c_support` int(11) NOT NULL DEFAULT 0,
+ `rf_support` int(11) NOT NULL DEFAULT 0,
+ `lf_front` int(11) NOT NULL DEFAULT 0,
+ `c_front` int(11) NOT NULL DEFAULT 0,
+ `rf_front` int(11) NOT NULL DEFAULT 0,
+ `party_id` int(11) NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `battlefield_party` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `lf_support` int(11) NOT NULL DEFAULT 0,
+ `c_support` int(11) NOT NULL DEFAULT 0,
+ `rf_support` int(11) NOT NULL DEFAULT 0,
+ `lf_front` int(11) NOT NULL DEFAULT 0,
+ `c_front` int(11) NOT NULL DEFAULT 0,
+ `rf_front` int(11) NOT NULL DEFAULT 0,
+ `party_id` int(11) NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `fleet` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `ship_name` varchar(75) NOT NULL,
+ `fight_current` int(11) NOT NULL DEFAULT 0,
+ `health_current` int(11) NOT NULL DEFAULT 0,
+ `cargo_units` int(11) NOT NULL DEFAULT 0,
+ `location` int(11) NOT NULL DEFAULT 0,
+ `cargo` varchar(250) NOT NULL,
+ `party_id` int(11) NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

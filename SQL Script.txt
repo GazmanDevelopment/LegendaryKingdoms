@@ -82,27 +82,16 @@ CREATE TABLE `spells` (
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
-CREATE TABLE `battlefield_enemy` (
- `id` int(11) NOT NULL AUTO_INCREMENT,
- `lf_support` int(11) NOT NULL DEFAULT 0,
- `c_support` int(11) NOT NULL DEFAULT 0,
- `rf_support` int(11) NOT NULL DEFAULT 0,
- `lf_front` int(11) NOT NULL DEFAULT 0,
- `c_front` int(11) NOT NULL DEFAULT 0,
- `rf_front` int(11) NOT NULL DEFAULT 0,
- `party_id` int(11) NOT NULL,
- PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE TABLE `battlefield_party` (
- `id` int(11) NOT NULL AUTO_INCREMENT,
- `lf_support` int(11) NOT NULL DEFAULT 0,
- `c_support` int(11) NOT NULL DEFAULT 0,
- `rf_support` int(11) NOT NULL DEFAULT 0,
- `lf_front` int(11) NOT NULL DEFAULT 0,
- `c_front` int(11) NOT NULL DEFAULT 0,
- `rf_front` int(11) NOT NULL DEFAULT 0,
- `party_id` int(11) NOT NULL,
+CREATE TABLE `battlefield` (
+ `id` int NOT NULL AUTO_INCREMENT,
+ `lf_support` int NOT NULL DEFAULT '0',
+ `c_support` int NOT NULL DEFAULT '0',
+ `rf_support` int NOT NULL DEFAULT '0',
+ `lf_front` int NOT NULL DEFAULT '0',
+ `c_front` int NOT NULL DEFAULT '0',
+ `rf_front` int NOT NULL DEFAULT '0',
+ `type` varchar(5) NOT NULL,
+ `party_id` int NOT NULL,
  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

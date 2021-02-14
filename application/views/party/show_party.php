@@ -131,7 +131,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 							    	</div><!-- Armour  -->
 							    	<div class="row"><!-- Fighting strength -->
 							    		<div class="col-md-4">
-							    			Strength					    			
+							    			Fighting					    			
 							    		</div>
 							    		<div class="col-md-3">
 							    			<input name="fight_max" id="fight_max" type="number" value="<?php echo ($character_entry['info']['fight_max']); ?>" min="0" max="99" maxlength = "2" size="1" />
@@ -779,7 +779,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			    	</div><!-- Armour  -->
 			    	<div class="row"><!-- Fighting strength -->
 			    		<div class="col-md-4">
-			    			Strength					    			
+			    			Fighting					    			
 			    		</div>
 			    		<div class="col-md-3">
 			    			<input name="fight_max" id="fight_max" type="number" min="0" max="99" maxlength = "2" size="1" />

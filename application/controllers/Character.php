@@ -64,7 +64,7 @@ class Character extends CI_Controller {
 	{
 		$character_id = intval($this->input->post('character_id'));
 
-		$data['armour_current'] = intval($this->input->post('armour_current'));
+		$data['armour_current'] = intval($this->input->post('armour'));
 		$data['charisma_current'] = intval($this->input->post('charisma_current'));
 		$data['charisma_max'] = intval($this->input->post('charisma_max'));
 		$data['fight_current'] = intval($this->input->post('fight_current'));

@@ -200,14 +200,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										</thead>
 										<tbody>
 											<?php foreach ($character_entry['equipment'] as $equipment_item) { ?>
-					                        	<td><?php echo $equipment_item['equip_name']; ?></td>
-					                        	<td><?php echo $equipment_item['skill_mod']; ?></td>
-					                        	<td><?php echo $equipment_item['mod_value']; ?></td>
-					                        	<td><?php echo $equipment_item['notes']; ?></td>
-					                        	<td>
-					                        		<a href="#" title="Return item to vault..." onClick="return_item(<?php echo $equipment_item['id']; ?>)"><i class="material-icons" style="padding-right: 4px;">inventory</i></a><br />
-					                        		<a href="#" title="Drop item..." onClick="drop_item(<?php echo $equipment_item['id']; ?>)"><i class="material-icons" style="padding-right: 4px;">delete_forever</i></a>
-					                        	</td>
+					                        	<tr>
+						                        	<td><?php echo $equipment_item['equip_name']; ?></td>
+						                        	<td><?php echo $equipment_item['skill_mod']; ?></td>
+						                        	<td><?php echo $equipment_item['mod_value']; ?></td>
+						                        	<td><?php echo $equipment_item['notes']; ?></td>
+						                        	<td>
+						                        		<a href="#" title="Return item to vault..." onClick="return_item(<?php echo $equipment_item['id']; ?>)"><i class="material-icons" style="padding-right: 4px;">inventory</i></a><br />
+						                        		<a href="#" title="Drop item..." onClick="drop_item(<?php echo $equipment_item['id']; ?>)"><i class="material-icons" style="padding-right: 4px;">delete_forever</i></a>
+						                        	</td>
+						                        </tr>
 					                        <?php } ?>
 										</tbody>
 									</table>	                        

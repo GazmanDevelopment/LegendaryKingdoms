@@ -837,7 +837,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					</div>
 					<div class="row">
 			    		<div class="col-md-3">
-			    			<textarea id="character_notes" name="character_notes"><?php echo ($character_entry['info']['notes']); ?></textarea>
+			    			<textarea id="character_notes" name="character_notes"></textarea>
 			    		</div>
 			    	</div>
 			    </form>

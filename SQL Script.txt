@@ -2,16 +2,19 @@ CREATE DATABASE `legends` COLLATE = 'utf8_general_ci';
 use `legends`;
 
 CREATE TABLE `armies` (
- `id` int(11) NOT NULL AUTO_INCREMENT,
- `party_id` int(11) NOT NULL,
+ `id` int NOT NULL AUTO_INCREMENT,
+ `party_id` int NOT NULL,
  `unit` text NOT NULL,
- `initial_strength` int(11) NOT NULL DEFAULT 0,
- `current_strength` int(11) NOT NULL DEFAULT 0,
- `initial_morale` int(11) NOT NULL DEFAULT 0,
- `current_morale` int(11) NOT NULL DEFAULT 0,
+ `initial_strength` int NOT NULL DEFAULT '0',
+ `current_strength` int NOT NULL DEFAULT '0',
+ `initial_morale` int NOT NULL DEFAULT '0',
+ `current_morale` int NOT NULL DEFAULT '0',
  `garrison` text NOT NULL,
+ `current_location` int NOT NULL,
+ `notes` text NOT NULL,
+ `found_location` int NOT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `character_list` (
  `id` int(11) NOT NULL AUTO_INCREMENT,

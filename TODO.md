@@ -14,4 +14,5 @@ Below are some things I still need to work on if I get the time.  For the moment
 - Review visual elements to see if there are better ways to visualise the data, especially the character sheets
 - Review all error handling code.  Ideally standardise dialogs and make use of CodeIgniters built-in message passing
 - Allow for Parties to be assigned to multiple users
+- Improve database handling - return "affected rows" instead of standard result of update / insert / delete queries
 - More things I can't think of right now but will come to me!

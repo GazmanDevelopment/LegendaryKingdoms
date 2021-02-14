@@ -67,12 +67,12 @@ class Party_model extends CI_Model {
 		$this->db->reset_query();
 		$this->db->flush_cache();
 		
-		$data['id'] = intval($party_id);
 		$data['party_silver'] = intval($silver);
 		$data['party_notes'] = strip_tags($notes);
 		$data['party_name'] = strip_tags($name);
 		$data['current_location'] = strip_tags($current_location);
 		
+		$this->db->where('id', intval($party_id));
 		return $this->db->update("party", $data);
 	}
 	

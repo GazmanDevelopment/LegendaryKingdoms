@@ -215,6 +215,34 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 									</table>	                        
 			                    </div>
 			                    <hr />
+						    	<legend>Spells</legend>
+						    	<div class="table-responsive">
+							    	<table class="table table-bordered">
+							    		<thead>
+											<tr>
+												<th scope="col">Spell</th>
+												<th scope="col">Description</th>
+												<th scope="col">Recharge</th>
+												<th scope="col">Used</th>
+												<th scope="col">Actions <a href="#" title="Learn spell..." onClick="add_character_spell(<?php echo($character_entry['info']['id']); ?>)"><i class="material-icons" style="padding-right: 4px;">add_circle</i></a><br /></th>
+											</tr>
+										</thead>
+										<tbody>
+											<?php foreach ($character_entry['spells'] as $spell) { ?>
+					                        	<tr>
+						                        	<td><?php echo $spell['name']; ?></td>
+						                        	<td><?php echo $spell['description']; ?></td>
+						                        	<td><?php echo $spell['recharge']; ?></td>
+						                        	<td><?php echo $spell['used']; ?></td>
+						                        	<td>
+						                        		<a href="#" title="Forget spell..." onClick="forget_spell(<?php echo $spell['id']; ?>)"><i class="material-icons" style="padding-right: 4px;">Forget spell</i></a>
+						                        	</td>
+						                        </tr>
+					                        <?php } ?>
+										</tbody>
+									</table>	                        
+			                    </div>
+			                    <hr />
 							  	<legend>Character Notes</legend>
 					    		<textarea id="character_notes" name="character_notes"><?php echo ($character_entry['info']['notes']); ?></textarea>
 							  </div>						  	

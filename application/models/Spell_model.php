@@ -14,7 +14,7 @@ class Spell_model extends CI_Model {
 		$this->db->reset_query();
 		$this->db->flush_cache();
 		
-		$this->db->select(*)->from('spells');
+		$this->db->select('*')->from('spells');
 		$this->db->where('character_id', intval($character_id));
 		
 		return $this->db->get()->result_array();

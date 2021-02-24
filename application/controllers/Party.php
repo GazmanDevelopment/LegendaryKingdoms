@@ -13,6 +13,7 @@ class Party extends CI_Controller {
         $this->load->model('character_model');
         $this->load->model('army_model');
         $this->load->model('fleet_model');
+        $this->load->model('spell_model');
         $this->load->model('battlefield_model');
         
         // Load stuff
@@ -60,9 +61,15 @@ class Party extends CI_Controller {
 		foreach($party_chars as $char) {
 			$character['info'] = $char;
 			
+			//Load any equipment or spells the character may have
 			$char_equip = $this->equipment_model->get_equipment_for_character($char['id']);
-			$character['equipment'] = $char_equip;
+			$char_spells = $this->spell_model->get_spells($char['id']);
 			
+			// Add any loaded equipment or spells to the character array
+			$character['equipment'] = $char_equip;
+			$character['spells'] = $char_spells;
+			
+			// Push the character entry to main character array
 			array_push($party_characters, $character);
 		}
 		
@@ -84,7 +91,6 @@ class Party extends CI_Controller {
     	} else {
     		$data['bf_party'] = null;
     	}
-    	
 		
 		$this->load->view('template/header', $header_info);
     	$this->load->view('template/nav_bar', $header_info);

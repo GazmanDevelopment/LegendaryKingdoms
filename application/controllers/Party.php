@@ -59,6 +59,14 @@ class Party extends CI_Controller {
 		$party_characters = array();
 		
 		foreach($party_chars as $char) {
+			unset($character);
+			unset($char_equip);
+			unset($char_spells);
+			
+			$character = array();
+			$char_equip = array();
+			$char_spells = array();
+			
 			$character['info'] = $char;
 			
 			//Load any equipment or spells the character may have

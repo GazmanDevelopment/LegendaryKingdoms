@@ -49,10 +49,10 @@ class Character_model extends CI_Model {
 		$this->db->reset_query();
 		$this->db->flush_cache();
 		
-		$this->db->select("*")->from("character_list")
-			//->join('party', 'party.id = character_list.party_id')
-			->where("character_list.party_id", intval($party_id));
-			//->where("party.user_id", intval($user_id));
+		$where_array = array('character_list.party_id' => intval($party_id), 'party.user_id' => intval($user_id));
+		$this->db->select("character_list.*")->from("character_list")
+			->join('party', 'party.id = character_list.party_id')
+			->where($where_array);
 		
 		return $this->db->get()->result_array();
 	}

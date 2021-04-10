@@ -7,6 +7,8 @@ Source: https://spidermindgames.co.uk/legendary-kingdoms/
 This system uses CodeIgniter v3 which I have included in this repository.  Obviously you should review their own licensing and check for an updated version if you are going to be palcing this on a publicly accessible server.
 This respository does not include the database.php file in the application/config directory.  You will need to set this up with your own database details.
 
+See the word document Installing Legends Tracker.docx for instructions on setting up a Ubuntu 20.04 LTS server to host.  I am hosting on Linode using the cheapest shared server, which is more than enough unless you somehow manage to get a lot of users!
+
 ## System Requirements
 PHP v7+  
 Bootstrap v4  

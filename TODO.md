@@ -6,7 +6,7 @@ Below are some things I still need to work on if I get the time.  For the moment
 - ~~Add Fleet support~~
 - ~~Add Battlefield Support~~
 - Fix ordering of codes
-- Add spell management
+- ~~Add spell management~~
 - Check security - users can only view / edit items in their assigned parties
 - Standardise naming conventions
 - Standardise function calls

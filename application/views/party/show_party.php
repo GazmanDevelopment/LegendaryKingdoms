@@ -64,6 +64,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				<?php } ?>
 			</div>
 		</div>
+		
+		<!-- Characters -->
 		<div class="tab-pane fade" id="characters" role="tabpanel" aria-labelledby="nav-profile-tab">
 			<legend>Party Characters</legend>
 			<a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add_character">Add character</a><br/>
@@ -223,8 +225,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												<th scope="col">Spell</th>
 												<th scope="col">Description</th>
 												<th scope="col">Recharge</th>
-												<th scope="col">Used</th>
-												<th scope="col">Actions <a href="#" title="Learn spell..." onClick="add_character_spell(<?php echo($character_entry['info']['id']); ?>)"><i class="material-icons" style="padding-right: 4px;">add_circle</i></a><br /></th>
+												<th scope="col">Available</th>
+												<th scope="col">Actions <a href="#" title="Learn spell..." onClick="add_character_spell(<?php echo($character_entry['info']['id']); ?>)"><i class="material-icons" style="padding-right: 4px;">menu_book</i></a><br /></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -235,8 +237,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 						                        	<td><?php echo $spell['recharge']; ?></td>
 						                        	<td><?php echo $spell['used']; ?></td>
 						                        	<td>
-						                        		<a href="#" title="Forget spell..." onClick="forget_spell(<?php echo $spell['id']; ?>)"><i class="material-icons" style="padding-right: 4px;">Forget spell</i></a>
-						                        	</td>
+						                        		<a href="#" title="Use spell..." onClick="use_spell(<?php echo $spell['id']; ?>)"><i class="material-icons" style="padding-right: 4px;">flash_off</i></a><br />
+														<a href="#" title="Recharge spell..." onClick="recharge_spell(<?php echo $spell['id']; ?>)"><i class="material-icons" style="padding-right: 4px;">bolt</i></a><br />						                        			
+						                        		<a href="#" title="Forget spell..." onClick="forget_spell(<?php echo $spell['id']; ?>)"><i class="material-icons" style="padding-right: 4px;">delete_forever</i></a>
+													</td>
 						                        </tr>
 					                        <?php } ?>
 										</tbody>
@@ -253,6 +257,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 			</div>
 		</div>
+		
+		<!-- Party Log -->
 		<div class="tab-pane fade" id="party_log" role="tabpanel" aria-labelledby="nav-contact-tab">
 			<div class="content">
 				<legend>Party Logs</legend>
@@ -289,6 +295,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</div>
 			</div>
 		</div>
+		
+		<!-- Party Equipment -->
 		<div class="tab-pane fade" id="party_vault" role="tabpanel" aria-labelledby="nav-about-tab">
 			<legend>Party Vault</legend>
 			<a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add_item">Add item</a><br/>
@@ -328,6 +336,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				</table>
 			</div>
 		</div>
+		
+		<!-- Armies -->
 		<div class="tab-pane fade" id="armies" role="tabpanel" aria-labelledby="nav-about-tab">
 			<legend>Party Armies</legend>
 			<a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add_army">Add army</a><br/>
@@ -414,6 +424,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				?>
 			</div>
 		</div>
+		
+		<!-- Fleet -->
 		<div class="tab-pane fade" id="fleets" role="tabpanel" aria-labelledby="nav-about-tab">
 			<legend>Party Fleets</legend>
 			<a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add_ship">Add ship to fleet</a><br/>
@@ -508,6 +520,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 				?>
 			</div>
 		</div>
+		
+		<!-- Battlefield -->
 		<div class="tab-pane fade" id="battlefield" role="tabpanel" aria-labelledby="nav-about-tab">
 			<legend>Battlefield</legend>
 			<a href="#" class="btn btn-info btn-sm" data-toggle="modal" data-target="#init_battlefield" onClick="init_battlefield(<?php echo $party_info[0]['id'];?>)">Prepare battlefield...</a><br/>
@@ -1418,7 +1432,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 </div>
 
-<!-- Delete ship -->
+<!-- Initialise Battlefield -->
 <div class="modal fade" id="init_battlefield" tabindex="-1" role="dialog" aria-labelledby="init_battlefield" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -1435,6 +1449,155 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>					
 				<button id="confirm_battlefield_init" type="submit" class="btn btn-danger" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="padding-right: 7px"></span>
+                    Confirm
+                </button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Add spell -->
+<div class="modal fade" id="add_spell" tabindex="-1" role="dialog" aria-labelledby="add_spell" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Add Spell</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form name="add_spell_form" id="add_spell_form" method="post" action="<?php echo URL; ?>spells/add_spell">
+					<input type="hidden" id="new_spell_character_id" name="new_spell_character_id" value="" />
+					<div class="row">
+						<div class="col-md-6">
+							<label for="new_spell_name">
+								Spell Name
+							</label><br />
+							<input type="text" name="new_spell_name" id="new_spell_name" spellcheck="true" required />
+						</div>
+						<div class="col-md-6">
+			    			<label for="new_spell_descr">
+			    				Description
+			    			</label><br />
+			    			<textarea name="new_spell_descr" id="new_spell_descr" spellcheck="true" rows="3" ></textarea>
+			    		</div>
+					</div>				
+			    	<div class="row">
+			    		<div class="col-md-6">
+			    			<label for="new_spell_charges">
+			    				Recharge
+			    			</label><br />
+			    			<input type="number" id="new_spell_charges" name="new_spell_charges" value="0" required />
+			    		</div>
+			    		<div class="col-md-6">
+			    			<label for="new_spell_used">
+			    				Available
+			    			</label><br />
+			    			<input type="number" id="new_spell_used" name="new_spell_used" value="0"  required />
+			    		</div>
+			    	</div>
+			    </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>					
+				<button id="confirm_add_spell" type="submit" class="btn btn-success" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="padding-right: 7px"></span>
+                    Confirm
+                </button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Use spell -->
+<div class="modal fade" id="use_spell" tabindex="-1" role="dialog" aria-labelledby="use_spell" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Use Spell</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form name="use_spell_form" id="use_spell_form" method="post" action="<?php echo URL; ?>spells/add_spell">
+					<input type="hidden" id="spell_id" name="spell_id" value="" />								
+			    	<div class="row">
+			    		<div class="col-md-6">
+			    			<label for="charges_used">
+			    				Charges Used
+			    			</label><br />
+			    			<input type="number" id="charges_used" name="charges_used" value="0" min="0" required />
+			    		</div>
+			    	</div>
+			    </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>					
+				<button id="confirm_use_spell" type="submit" class="btn btn-success" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="padding-right: 7px"></span>
+                    Confirm
+                </button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Recharge spell -->
+<div class="modal fade" id="recharge_spell" tabindex="-1" role="dialog" aria-labelledby="recharge_spell" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Recharge Spell</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form name="recharge_spell_form" id="recharge_spell_form" method="post" action="<?php echo URL; ?>spells/recharge_spell">
+					<input type="hidden" id="recharge_spell_id" name="recharge_spell_id" value="" />								
+			    	<div class="row">
+			    		<div class="col-md-6">
+			    			<label for="recharge_amount">
+			    				Recharge Amount
+			    			</label><br />
+			    			<input type="number" id="recharge_amount" name="recharge_amount" value="0" min="0" required />
+			    		</div>
+			    	</div>
+			    </form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>					
+				<button id="confirm_recharge_spell" type="submit" class="btn btn-success" data-dismiss="modal">
+                    <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="padding-right: 7px"></span>
+                    Confirm
+                </button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Forget spell -->
+<div class="modal fade" id="forget_spell" tabindex="-1" role="dialog" aria-labelledby="forget_spell" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Forget Spell</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="forget_spell_form" name="forget_spell_form" method="POST" action="<?php echo URL; ?>spell/forget_spell">
+					<input type="hidden" id="forget_spell_id" name="forget_spell_id" />
+				</form>
+				You will have to re-learn the spell if you continue. <br />
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>					
+				<button id="confirm_forget_spell" type="submit" class="btn btn-danger" data-dismiss="modal">
                     <span class="glyphicon glyphicon-floppy-disk" aria-hidden="true" style="padding-right: 7px"></span>
                     Confirm
                 </button>

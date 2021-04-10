@@ -1125,5 +1125,221 @@
 				}
 			});
 		}
+		
+		function add_character_spell(character_id = 0)
+		{
+			var $modal = $('#add_spell');
+			$('#new_spell_character_id').val(character_id);
+			
+			$modal.modal({
+				keyboard: true,
+				show: true
+			});
+			
+			$modal.on('click', '#confirm_add_spell', function(e) {
+				$modal.modal('hide');
+				$modal.on('hidden.bs.modal', function() {
+					// Get form
+					var form = $('#add_spell_form')[0];
+		
+					// Create an FormData object 
+					var data = new FormData(form);
+					
+					// disabled the submit button
+					$("#btnSubmit").prop("disabled", true);
+					
+					$.ajax({
+						type: "POST",
+						enctype: 'multipart/form-data',
+						url: "<?php echo URL; ?>spells/add_spell",
+						data: data,
+						processData: false,
+						contentType: false,
+						cache: false,
+						timeout: 600000,
+						success: function (data) {
+							if (data.length > 0) {
+								swal("Error saving", "There was an error saving the spell\nPlease try again.", "error");
+								
+								// Re-enable the upload button
+								$("#btnSubmit").prop("disabled", false);
+							} else {
+								// Re-enable the upload button
+								$("#btnSubmit").prop("disabled", false);
+								
+								// Reload the current page
+								location.reload();
+							}	
+						},
+						error: function (e) {
+							swal("Error saving", "There was an error saving the spell.  The error was:\n" + e.responseText + "\nPlease try again.", "error");
+							$("#btnSubmit").prop("disabled", false);
+						}
+					});
+				});
+			});
+		}
+	
+		function use_spell(spell_id = 0)
+		{
+			var $modal = $('#use_spell');
+			$('#spell_id').val(spell_id);
+			
+			$modal.modal({
+				keyboard: true,
+				show: true
+			});
+			
+			$modal.on('click', '#confirm_use_spell', function(e) {
+				$modal.modal('hide');
+				$modal.on('hidden.bs.modal', function() {
+					// Get form
+					var form = $('#use_spell_form')[0];
+		
+					// Create an FormData object 
+					var data = new FormData(form);
+					
+					// disabled the submit button
+					$("#btnSubmit").prop("disabled", true);
+					
+					$.ajax({
+						type: "POST",
+						enctype: 'multipart/form-data',
+						url: "<?php echo URL; ?>spells/use_spell",
+						data: data,
+						processData: false,
+						contentType: false,
+						cache: false,
+						timeout: 600000,
+						success: function (data) {
+							if (data.length > 0) {
+								swal("Error saving", "There was an error saving the spell\nPlease try again.", "error");
+								
+								// Re-enable the upload button
+								$("#btnSubmit").prop("disabled", false);
+							} else {
+								// Re-enable the upload button
+								$("#btnSubmit").prop("disabled", false);
+
+								// Reload the current page
+								location.reload();
+							}	
+						},
+						error: function (e) {
+							swal("Error saving", "There was an error saving the spell.  The error was:\n" + e.responseText + "\nPlease try again.", "error");
+							$("#btnSubmit").prop("disabled", false);
+						}
+					});
+				});
+			});
+		}
+		
+		function forget_spell(spell_id = 0)
+		{
+			var $modal = $('#forget_spell');
+
+			$('#forget_spell_id').val(spell_id);
+
+			$modal.modal({
+				keyboard: true,
+				show: true
+			});
+
+			$modal.on('click', '#confirm_forget_spell', function(e) {
+				$modal.modal('hide');
+				$modal.on('hidden.bs.modal', function() {
+					// Get form
+					var form = $('#forget_spell_form')[0];
+
+					// Create an FormData object 
+					var data = new FormData(form);
+					
+					// disabled the submit button
+					$("#btnSubmit").prop("disabled", true);
+
+					$.ajax({
+						type: "POST",
+						enctype: 'multipart/form-data',
+						url: "<?php echo URL; ?>spells/delete_spell",
+						data: data,
+						processData: false,
+						contentType: false,
+						cache: false,
+						timeout: 600000,
+						success: function (data) {
+							if (data.length > 0) {
+								swal("Error saving", "There was an error forgetting the spell\nPlease try again.", "error");
+								
+								// Re-enable the upload button
+								$("#btnSubmit").prop("disabled", false);
+							} else {
+								// Re-enable the upload button
+								$("#btnSubmit").prop("disabled", false);
+								
+								location.reload();
+							}	
+						},
+						error: function (e) {
+							swal("Error saving", "There was an error forgetting the spell.  The error was:\n" + e.responseText + "\nPlease try again.", "error");
+							$("#btnSubmit").prop("disabled", false);
+						}
+					});
+				});
+			});
+		}
+		
+		function recharge_spell(spell_id = 0)
+		{
+			var $modal = $('#recharge_spell');
+			$('#recharge_spell_id').val(spell_id);
+			
+			$modal.modal({
+				keyboard: true,
+				show: true
+			});
+			
+			$modal.on('click', '#confirm_recharge_spell', function(e) {
+				$modal.modal('hide');
+				$modal.on('hidden.bs.modal', function() {
+					// Get form
+					var form = $('#recharge_spell_form')[0];
+		
+					// Create an FormData object 
+					var data = new FormData(form);
+					
+					// disabled the submit button
+					$("#btnSubmit").prop("disabled", true);
+					
+					$.ajax({
+						type: "POST",
+						enctype: 'multipart/form-data',
+						url: "<?php echo URL; ?>spells/recharge_spell",
+						data: data,
+						processData: false,
+						contentType: false,
+						cache: false,
+						timeout: 600000,
+						success: function (data) {
+							if (data.length > 0) {
+								swal("Error saving", "There was an error saving the spell\nPlease try again.", "error");
+								
+								// Re-enable the upload button
+								$("#btnSubmit").prop("disabled", false);
+							} else {
+								// Re-enable the upload button
+								$("#btnSubmit").prop("disabled", false);
+
+								// Reload the current page
+								location.reload();
+							}	
+						},
+						error: function (e) {
+							swal("Error saving", "There was an error saving the spell.  The error was:\n" + e.responseText + "\nPlease try again.", "error");
+							$("#btnSubmit").prop("disabled", false);
+						}
+					});
+				});
+			});
+		}
 	</script>
 </html>

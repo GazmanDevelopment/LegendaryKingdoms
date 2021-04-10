@@ -20,7 +20,7 @@ class Spell_model extends CI_Model {
 		return $this->db->get()->result_array();
 	}
 	
-	public function delete_spell($spell_id)
+		public function delete_spell($spell_id)
 	{
 	 	$this->db->reset_query();
 		$this->db->flush_cache();
@@ -37,28 +37,41 @@ class Spell_model extends CI_Model {
 		$this->db->flush_cache();
 
 		$data['character_id'] = intval($character_id);
-		$data['name'] = strip_tags($spell_data['spell_name']);
-		$data['description'] = strip_tags($spell_data['spell_descr']);
-		$data['recharge'] = intval($spell_data['spell_recharge']);
+		$data['name'] = strip_tags($spell_data['name']);
+		$data['description'] = strip_tags($spell_data['description']);
+		$data['recharge'] = intval($spell_data['recharge']);
 		$data['used'] = intval($spell_data['used_charge']);
 
-		$this->db->insert('party_equipment', $data);
+		$this->db->insert('spells', $data);
 		
 		return $this->db->affected_rows();
 	}
 	
-	public function update_spell($spell_data, $character_id)
+	public function use_spell($spell_data, $spell_id)
 	{
-	 	$this->db->reset_query();
+		$this->db->reset_query();
 		$this->db->flush_cache();
 		
-		$data['name'] = strip_tags($spell_data['spell_name']);
-		$data['description'] = strip_tags($spell_data['spell_descr']);
-		$data['recharge'] = intval($spell_data['spell_recharge']);
-		$data['used'] = intval($spell_data['used_charge']);
+		$used = intval($spell_data['used_charge']);
 		
-		$this->db->where('id', intval($character_id));
-		$this->db->update('spells', $data);
+		$sql = "update spells set used = used - ? where id = ?";
+		
+		$this->db->query($sql, array($used, intval($spell_id)));
+		
+		return $this->db->affected_rows();
+	}
+	
+	public function recharge_spell($spell_data, $spell_id)
+	{
+		$this->db->reset_query();
+		$this->db->flush_cache();
+		
+		$recharge_amount = intval($spell_data['recharge_amount']);
+		
+		// If the recharge amount would be more than the max amount, set to the max amount
+		$sql = "update spells set used = case when (used + ?) < recharge then (used + ?) else recharge end where id=?";
+		
+		$this->db->query($sql, array($recharge_amount, $recharge_amount, intval($spell_id)));		
 		
 		return $this->db->affected_rows();
 	}

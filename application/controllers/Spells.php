@@ -25,21 +25,21 @@ class Spells extends CI_Controller {
 	{
 		$header_info['title'] = 'Legendary Kingdoms - Party Tracker';
 		
-    	$parties = $this->party_model->get_user_parties($this->ion_auth->user()->row()->id);
-    	$data['party_list'] = $parties;
+		$parties = $this->party_model->get_user_parties($this->ion_auth->user()->row()->id);
+		$data['party_list'] = $parties;
 
-    	$this->load->view('template/header', $header_info);
+		$this->load->view('template/header', $header_info);
 		$this->load->view('party/party_list', $data);
 		$this->load->view('template/footer_party_list');
 	}
 
-	public function add_spell()
+		public function add_spell()
 	{
-		$character_id = intval($this->input->post('character_id'));
-		$data['name'] = strip_tags($this->input->post('spell_name'));
-		$data['description'] = strip_tags($this->input->post('spell_descr'));
-		$data['recharge'] = intval($this->input->post('spell_recharge'));
-		$data['used'] = intval($this->input->post('used_charge'));
+		$character_id = intval($this->input->post('new_spell_character_id'));
+		$data['name'] = strip_tags($this->input->post('new_spell_name'));
+		$data['description'] = strip_tags($this->input->post('new_spell_descr'));
+		$data['recharge'] = intval($this->input->post('new_spell_charges'));
+		$data['used_charge'] = intval($this->input->post('new_spell_used'));
 
 		$return_val = $this->spell_model->add_spell($data, $character_id);
 
@@ -49,23 +49,31 @@ class Spells extends CI_Controller {
 
 	public function delete_spell()
 	{
-		$spell_id = intval($this->input->post('delete_spell_id'));
+		$spell_id = intval($this->input->post('forget_spell_id'));
 
 		$return_val = $this->spell_model->delete_spell($spell_id);
 
 		header('Content-type: application/json');
 		echo json_encode($return_val);
 	}
-
-	public function update_spell()
+	
+	public function use_spell()
 	{
-		$character_id = intval($this->input->post('character_id'));
-		$data['name'] = strip_tags($this->input->post('spell_name'));
-		$data['description'] = strip_tags($this->input->post('spell_descr'));
-		$data['recharge'] = intval($this->input->post('spell_recharge'));
-		$data['used'] = intval($this->input->post('used_charge'));
+		$spell_id = intval($this->input->post('spell_id'));
+		$data['used_charge'] = strip_tags($this->input->post('charges_used'));
 
-		$return_val = $this->spell_model->update_spell($spell_data, $character_id)
+		$return_val = $this->spell_model->use_spell($data, $spell_id);
+		
+		header('Content-type: application/json');
+		echo json_encode($return_val);
+	}
+	
+	public function recharge_spell()
+	{
+		$spell_id = intval($this->input->post('recharge_spell_id'));
+		$data['recharge_amount'] = strip_tags($this->input->post('recharge_amount'));
+
+		$return_val = $this->spell_model->recharge_spell($data, $spell_id);
 
 		header('Content-type: application/json');
 		echo json_encode($return_val);

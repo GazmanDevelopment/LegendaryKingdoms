@@ -284,7 +284,9 @@
 			<section id="content">
 				<?php echo form_open("auth/login");?>
 					<h1>Login Form</h1>
-					<div id="infoMessage"><?php echo $message;?></div>
+					<?php if(isset($message)) { ?>
+						<div class="alert alert-warning alert-dismissible fade show" role="alert" id="infoMessage"><?php echo $message;?></div>
+					<?php } ?>
 					<div>
 		                <?php echo form_input($identity);?>
 		            </div>

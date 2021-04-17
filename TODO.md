@@ -10,7 +10,7 @@ Below are some things I still need to work on if I get the time.  For the moment
 - Check security - users can only view / edit items in their assigned parties
 - Standardise naming conventions
 - Standardise function calls
-- Flesh out the ion_auth code to allow for registrations, activations, password resets etc
+- ~~Flesh out the ion_auth code to allow for registrations, activations, password resets etc~~
 - Review visual elements to see if there are better ways to visualise the data, especially the character sheets
 - Review all error handling code.  Ideally standardise dialogs and make use of CodeIgniters built-in message passing
 - Allow for Parties to be assigned to multiple users

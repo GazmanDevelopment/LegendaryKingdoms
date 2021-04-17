@@ -286,13 +286,15 @@
 					<h1><?php echo lang('forgot_password_heading');?></h1>
 					<p><?php echo sprintf(lang('forgot_password_subheading'), $identity_label);?></p>
 
-					<div id="infoMessage"><?php echo $message;?></div>
+					<?php if(isset($message)) { ?>
+						<div class="alert alert-warning alert-dismissible fade show" role="alert" id="infoMessage"><?php echo $message;?></div>
+					<?php } ?>
 
 					<p>      	
 						<?php echo form_input($identity);?>
 					</p>
 					<div>
-					<div class="g-recaptcha" data-sitekey="<?php echo HORSCRUST_SITE; ?>"></div>
+		                <div class="g-recaptcha" data-sitekey="<?php echo HORSCRUST_SITE; ?>"></div>
 		                <p><?php echo form_submit('submit', lang('forgot_password_submit_btn'));?></p>
 						<a href="login">Back to login</a>
 		            </div>   				

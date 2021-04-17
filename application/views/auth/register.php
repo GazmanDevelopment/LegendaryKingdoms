@@ -284,7 +284,9 @@
 			<section id="content">
 				<?php echo form_open("auth/register");?>
 					<h1>Register New User</h1>
-					<div id="infoMessage"><?php echo $message;?></div>
+					<?php if(isset($message)) { ?>
+						<div class="alert alert-warning alert-dismissible fade show" role="alert" id="infoMessage"><?php echo $message;?></div>
+					<?php } ?>
 					<div>
 		                <?php echo lang('create_user_fname_label', 'first_name');?><br />
 		                <?php echo form_input($first_name);?>
@@ -309,9 +311,11 @@
 						<?php echo lang('create_user_password_confirm_label', 'password_confirm');?><br />
 						<?php echo form_input($password_confirm);?>
 					</div>
-	                <!--div class="g-recaptcha" data-sitekey="6LfcUsMZAAAAANErvUWT3Q6rJBfa2q9n6dwBP2pn"></div-->
-					<p><?php echo form_submit('submit', lang('create_user_submit_btn'));?></p>
-					
+	                		<div>
+						<div class="g-recaptcha" data-sitekey="6LfcUsMZAAAAANErvUWT3Q6rJBfa2q9n6dwBP2pn"></div>
+						<p><?php echo form_submit('submit', lang('create_user_submit_btn'));?></p>
+						<a href="login">Back to login</a>
+					</div>
 					<?php echo form_close();?>    
 		    </section>
 		</div>

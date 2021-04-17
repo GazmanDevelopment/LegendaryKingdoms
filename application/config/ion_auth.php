@@ -184,9 +184,14 @@ $config['remember_cookie_name'] = 'remember_code';
  */
 $config['use_ci_email'] = TRUE; // Send Email using the builtin CI email class, if false it will return the code and the identity
 $config['email_config'] = [
-	'protocol' => 'sendmail',
-	'mailtype'  => 'html', 
-	'charset'   => 'iso-8859-1'
+	'protocol'	=> 'smtp',
+	'smtp_host' => 'ssl://smtp.googlemail.com',
+	'smtp_user' => '<enter your username here>',
+	'smtp_pass' => '<Enter your password here>',
+	'smtp_port' => 465,
+	'charset'	=> 'utf-8',
+	'mailtype'	=> 'html',
+	'newline'	=> "\r\n"
 ];
 
 /*
